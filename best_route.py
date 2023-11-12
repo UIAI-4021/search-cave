@@ -96,3 +96,17 @@ TP = sum(Path["Price"])
 TD = sum(Path["Distance"])
 TT = sum(Path["FlyTime"])
 n = len(Path["Airline"])
+
+for i in range(1, n + 1):
+    s += f"""Flight #{i} ({Path["Airline"][i - 1]})
+From: {Path["Node"][i - 1]} - {City[Path["Node"][i - 1]]}, {Country[Path["Node"][i - 1]]}
+To: {Path["Node"][i]} - {Country[Path["Node"][i]]}, {City[Path["Node"][i]]}
+Duration: {Path["Distance"][i - 1]}km
+Time: {Path["FlyTime"][i - 1]}h
+Price: {Path["Price"][i - 1]}$
+----------------------------
+"""
+s += f"""Total Price: {TP}
+Total Duration: {TD}
+Total Time: {TT}
+"""
