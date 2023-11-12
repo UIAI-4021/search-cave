@@ -12,6 +12,55 @@ import heapq
 import time
 df = pd.read_csv('Flight_Data.csv')
 Start = time.time()
+def dijkstra(graph, graphD, graphF, graphA, start, end):
+    prices = {node: float('inf') for node in graph}
+    prices[start] = 0
+    queue = [(0, start)]
+    previous = {node: None for node in graph}
+    previousP = {node: None for node in graph}
+    previousD = {node: None for node in graph}
+    previousF = {node: None for node in graph}
+    previousA = {node: None for node in graph}
+    visited = set()
+    while queue:
+        current_distance, current_node = heapq.heappop(queue)
+        if current_node in visited:
+            continue
+        visited.add(current_node)
+        if current_node == end:
+            path = []
+            pathP = []
+            pathD = []
+            pathF = []
+            pathA = []
+            current_node = end
+            while current_node != start:
+                path.append(current_node)
+                pathP.append(previousP[current_node])
+                pathD.append(previousD[current_node])
+                pathF.append(previousF[current_node])
+                pathA.append(previousA[current_node])
+                current_node = previous[current_node]
+            path.append(start)
+            Path = {}
+            Path["Node"] = path[::-1]
+            Path["Price"] = pathP[::-1]
+            Path["Distance"] = pathD[::-1]
+            Path["FlyTime"] = pathF[::-1]
+            Path["Airline"] = pathA[::-1]
+            Path["end"] = prices[end]
+            return Path
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            if distance < prices[neighbor]:
+                prices[neighbor] = distance
+                previous[neighbor] = current_node
+                previousP[neighbor] = graph[current_node][neighbor]
+                previousD[neighbor] = graphD[current_node][neighbor]
+                previousF[neighbor] = graphF[current_node][neighbor]
+                previousA[neighbor] = graphA[current_node][neighbor]
+                heapq.heappush(queue, (distance, neighbor))
+
 graph = {}
 graphD = {}
 graphF = {}
@@ -37,3 +86,4 @@ for _, row in df.iterrows():
     graphD[row.SourceAirport][row.DestinationAirport] = Distance
     graphF[row.SourceAirport][row.DestinationAirport] = FlyTime
     graphA[row.SourceAirport][row.DestinationAirport]= Airline
+Path = dijkstra(graph, graphD, graphF, graphA, 'Imam Khomeini International Airport', 'Raleigh Durham International Airport')
