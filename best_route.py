@@ -110,3 +110,5 @@ s += f"""Total Price: {TP}
 Total Duration: {TD}
 Total Time: {TT}
 """
+with open('14-UIAI4021-PR1-Q1(Dijkstra).txt', 'w') as file:
+  file.write(s)
