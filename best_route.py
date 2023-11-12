@@ -11,3 +11,29 @@ import pandas as pd
 import heapq
 import time
 df = pd.read_csv('Flight_Data.csv')
+Start = time.time()
+graph = {}
+graphD = {}
+graphF = {}
+graphA = {}
+Country = {}
+City = {}
+for _, row in df.iterrows():
+    weight = row.Price
+    Distance = row.Distance
+    FlyTime = row.FlyTime
+    Airline = row.Airline
+    Country[row.DestinationAirport] = row.DestinationAirport_Country
+    City[row.DestinationAirport] = row.DestinationAirport_City
+    graph.setdefault(row.SourceAirport, {})
+    graphD.setdefault(row.SourceAirport, {})
+    graphF.setdefault(row.SourceAirport, {})
+    graphA.setdefault(row.SourceAirport, {})
+    graph.setdefault(row.DestinationAirport, {})
+    graphD.setdefault(row.DestinationAirport, {})
+    graphF.setdefault(row.DestinationAirport, {})
+    graphA.setdefault(row.DestinationAirport, {})
+    graph[row.SourceAirport][row.DestinationAirport] = weight
+    graphD[row.SourceAirport][row.DestinationAirport] = Distance
+    graphF[row.SourceAirport][row.DestinationAirport] = FlyTime
+    graphA[row.SourceAirport][row.DestinationAirport]= Airline
