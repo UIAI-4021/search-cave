@@ -87,3 +87,12 @@ for _, row in df.iterrows():
     graphF[row.SourceAirport][row.DestinationAirport] = FlyTime
     graphA[row.SourceAirport][row.DestinationAirport]= Airline
 Path = dijkstra(graph, graphD, graphF, graphA, 'Imam Khomeini International Airport', 'Raleigh Durham International Airport')
+
+s = f"""Dijkstra Algorithm
+Execution Time: {time.time() - Start}
+.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+"""
+TP = sum(Path["Price"])
+TD = sum(Path["Distance"])
+TT = sum(Path["FlyTime"])
+n = len(Path["Airline"])
