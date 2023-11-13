@@ -86,7 +86,9 @@ for _, row in df.iterrows():
     graphD[row.SourceAirport][row.DestinationAirport] = Distance
     graphF[row.SourceAirport][row.DestinationAirport] = FlyTime
     graphA[row.SourceAirport][row.DestinationAirport]= Airline
-Path = dijkstra(graph, graphD, graphF, graphA, 'Imam Khomeini International Airport', 'Raleigh Durham International Airport')
+Airport = input()
+Airport = Airport.split(' - ')
+Path = dijkstra(graph, graphD, graphF, graphA, Airport[0], Airport[1])
 
 s = f"""Dijkstra Algorithm
 Execution Time: {time.time() - Start}
